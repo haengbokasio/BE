@@ -1,0 +1,7 @@
+resources:
+  - backend.yaml
+
+configMapGenerator:
+  - name: backend-config
+    literals:
+      - SPRING_PROFILES_ACTIVE=default
