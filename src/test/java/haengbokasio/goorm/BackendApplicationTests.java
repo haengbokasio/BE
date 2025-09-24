@@ -1,4 +1,4 @@
-package haengbokasio.backend;
+package haengbokasio.goorm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

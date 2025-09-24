@@ -1,13 +1,13 @@
-package haengbokasio.backend;
+package haengbokasio.goorm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class HaengbokasioApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		SpringApplication.run(HaengbokasioApplication.class, args);
 	}
 
 }
