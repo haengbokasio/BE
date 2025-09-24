@@ -1,4 +1,4 @@
-package haengbokasio.goorm;
+package com.goorm.haengbokasio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
