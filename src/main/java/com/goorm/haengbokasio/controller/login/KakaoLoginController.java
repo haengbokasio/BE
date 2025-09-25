@@ -39,14 +39,12 @@ public class KakaoLoginController {
         // 쿠키에 토큰과 카카오ID 저장
         Cookie tokenCookie = new Cookie("token", jwtToken);
         tokenCookie.setHttpOnly(true);
-        tokenCookie.setSecure(true);
         tokenCookie.setPath("/");
         tokenCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(tokenCookie);
 
         Cookie kakaoIdCookie = new Cookie("kakaoId", String.valueOf(user.getKakaoId()));
         kakaoIdCookie.setHttpOnly(false);
-        kakaoIdCookie.setSecure(true);
         kakaoIdCookie.setPath("/");
         kakaoIdCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(kakaoIdCookie);
