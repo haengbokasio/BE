@@ -43,7 +43,7 @@ spec:
     - host: haengbokasio.goorm.training
       http:
         paths:
-          - path: /
+          - path: /api
             pathType: Prefix
             backend:
               service:
