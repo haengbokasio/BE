@@ -7,6 +7,7 @@ import com.goorm.haengbokasio.service.MatchingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/matching")
 @RequiredArgsConstructor
+@Tag(name = "Matching", description = "matching 관리 API")
 public class MatchController {
 
     private final MatchingService matchingService;
@@ -29,68 +31,68 @@ public class MatchController {
             @ApiResponse(responseCode = "404", description = "멘토 또는 멘티를 찾을 수 없음")
     })
     public ResponseEntity<Matching> createMatching(
-            @RequestParam Long mentorId,
-            @RequestParam Long mentiId) {
+            @RequestParam Long mentorKakaoId,
+            @RequestParam Long mentiKakaoId) {
 
-        Matching matching = matchingService.createMatching(mentorId, mentiId);
+        Matching matching = matchingService.createMatching(mentorKakaoId, mentiKakaoId);
         return ResponseEntity.ok(matching);
     }
 
     @GetMapping("/menti/{mentor_kakaoId}")
-    @Operation(summary = "멘토와 연결중인 멘티 조회", description = "멘토 ID와 상태값에 따라 연결중인 멘티 리스트 조회")
+    @Operation(summary = "멘토 기준 매칭된 멘티 조회", description = "멘토 카카오ID와 상태값에 따라 연결중인 멘티 리스트 조회")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "404", description = "멘토를 찾을 수 없음")
     })
     public ResponseEntity<List<Menti>> getMentisBySts(
-            @PathVariable Long mentorId,
+            @PathVariable("mentor_kakaoId") Long mentorKakaoId,
             @RequestParam(required = false) List<String> status) {
 
-        List<Menti> mentiList = matchingService.getMentisBySts(mentorId, status);
+        List<Menti> mentiList = matchingService.getMentisBySts(mentorKakaoId, status);
         return ResponseEntity.ok(mentiList);
     }
 
     @GetMapping("/mento/{menti_kakaoId}")
-    @Operation(summary = "멘티와 연결중인 멘토 조회", description = "멘티 ID와 상태값에 따라 연결중인 멘토 리스트 조회")
+    @Operation(summary = "멘티 기준 매칭된 멘토 조회", description = "멘티 ID와 상태값에 따라 연결중인 멘토 리스트 조회")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "404", description = "멘토를 찾을 수 없음")
     })
     public ResponseEntity<List<Mentor>> getMentorsBySts(
-            @PathVariable Long mentiId,
+            @PathVariable("menti_kakaoId") Long mentiKakaoId,
             @RequestParam(required = false) List<String> status) {
 
-        List<Mentor> mentorList = matchingService.getMentorsBySts(mentiId, status);
+        List<Mentor> mentorList = matchingService.getMentorsBySts(mentiKakaoId, status);
         return ResponseEntity.ok(mentorList);
     }
 
-    @PutMapping("/approve/{menti_kakaoId}")
-    @Operation(summary = "멘토가 멘티 요청 승인", description = "멘토가 특정 멘티의 매칭 요청을 승인")
+    @PutMapping("/approve")
+    @Operation(summary = "요청 승인", description = "멘티의 매칭 요청을 승인")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "승인 성공"),
             @ApiResponse(responseCode = "404", description = "대기중인 매칭을 찾을 수 없음"),
             @ApiResponse(responseCode = "400", description = "승인할 수 없는 상태")
     })
     public ResponseEntity<Matching> approveMentiRequest(
-            @PathVariable Long mentiId,
-            @RequestParam Long mentorId) {
+            @RequestParam Long mentiKakaoId,
+            @RequestParam Long mentorKakaoId) {
 
-        Matching approvedMatching = matchingService.approveMentiRequest(mentorId, mentiId);
+        Matching approvedMatching = matchingService.approveMentiRequest(mentorKakaoId, mentiKakaoId);
         return ResponseEntity.ok(approvedMatching);
     }
 
-    @PutMapping("/reject/{menti_kakaoId}")
-    @Operation(summary = "멘토가 멘티 요청 거절", description = "멘토가 특정 멘티의 매칭 요청을 거절")
+    @PutMapping("/reject")
+    @Operation(summary = "요청 거절", description = "멘티의 매칭 요청을 거절")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "거절 성공"),
             @ApiResponse(responseCode = "404", description = "대기중인 매칭을 찾을 수 없음"),
             @ApiResponse(responseCode = "400", description = "거절할 수 없는 상태")
     })
     public ResponseEntity<String> rejectMentiRequest(
-            @PathVariable Long mentiId,
-            @RequestParam Long mentorId) {
+            @RequestParam Long mentiKakaoId,
+            @RequestParam Long mentorKakaoId) {
 
-        matchingService.rejectMentiRequest(mentorId, mentiId);
+        matchingService.rejectMentiRequest(mentorKakaoId, mentiKakaoId);
         return ResponseEntity.ok("멘티의 매칭 요청이 거절되었습니다.");
     }
 }

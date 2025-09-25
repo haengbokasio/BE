@@ -2,6 +2,8 @@ package com.goorm.haengbokasio.repository;
 
 import com.goorm.haengbokasio.entity.Matching;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,27 +12,27 @@ import java.util.Optional;
 @Repository
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
 
-    // 멘토 ID와 상태로 매칭 조회
-    List<Matching> findByMentorIdAndSts(Long mentorId, String sts);
+    @Query("SELECT m FROM Matching m WHERE m.mentor.kakaoId = :mentorKakaoId AND m.sts = :sts")
+    List<Matching> findByMentorKakaoIdAndSts(@Param("mentorKakaoId") Long mentorKakaoId, @Param("sts") String sts);
 
-    // 멘티 ID와 상태로 매칭 조회
-    List<Matching> findByMentiIdAndSts(Long mentiId, String sts);
+    @Query("SELECT m FROM Matching m WHERE m.menti.kakaoId = :mentiKakaoId AND m.sts = :sts")
+    List<Matching> findByMentiKakaoIdAndSts(@Param("mentiKakaoId") Long mentiKakaoId, @Param("sts") String sts);
 
-    // 특정 멘토-멘티 매칭 존재 여부 확인
-    boolean existsByMentorIdAndMentiId(Long mentorId, Long mentiId);
+    @Query("SELECT CASE WHEN COUNT(m) > 0 THEN true ELSE false END FROM Matching m WHERE m.mentor.kakaoId = :mentorKakaoId AND m.menti.kakaoId = :mentiKakaoId")
+    boolean existsByMentorKakaoIdAndMentiKakaoId(@Param("mentorKakaoId") Long mentorKakaoId, @Param("mentiKakaoId") Long mentiKakaoId);
 
-    // 멘토 ID로 모든 매칭 조회
-    List<Matching>findByMentorId(Long mentorId);
+    @Query("SELECT m FROM Matching m WHERE m.mentor.kakaoId = :mentorKakaoId")
+    List<Matching> findByMentorKakaoId(@Param("mentorKakaoId") Long mentorKakaoId);
 
-    // 멘티 ID로 모든 매칭 조회
-    List<Matching> findByMentiId(Long mentiId);
+    @Query("SELECT m FROM Matching m WHERE m.menti.kakaoId = :mentiKakaoId")
+    List<Matching> findByMentiKakaoId(@Param("mentiKakaoId") Long mentiKakaoId);
 
-    // 특정 멘토-멘티와 상태로 매칭 조회
-    Optional<Matching> findByMentorIdAndMentiIdAndSts(Long mentorId, Long mentiId, String sts);
+    @Query("SELECT m FROM Matching m WHERE m.mentor.kakaoId = :mentorKakaoId AND m.menti.kakaoId = :mentiKakaoId AND m.sts = :sts")
+    Optional<Matching> findByMentorKakaoIdAndMentiKakaoIdAndSts(@Param("mentorKakaoId") Long mentorKakaoId, @Param("mentiKakaoId") Long mentiKakaoId, @Param("sts") String sts);
 
-    // 멘토 ID와 상태 목록으로 매칭 조회 (IN절)
-    List<Matching> findByMentorIdAndStsIn(Long mentorId, List<String> stsList);
+    @Query("SELECT m FROM Matching m WHERE m.mentor.kakaoId = :mentorKakaoId AND m.sts IN :stsList")
+    List<Matching> findByMentorKakaoIdAndStsIn(@Param("mentorKakaoId") Long mentorKakaoId, @Param("stsList") List<String> stsList);
 
-    // 멘티 ID와 상태 목록으로 매칭 조회 (IN절)
-    List<Matching> findByMentiIdAndStsIn(Long mentiId, List<String> stsList);
+    @Query("SELECT m FROM Matching m WHERE m.menti.kakaoId = :mentiKakaoId AND m.sts IN :stsList")
+    List<Matching> findByMentiKakaoIdAndStsIn(@Param("mentiKakaoId") Long mentiKakaoId, @Param("stsList") List<String> stsList);
 }

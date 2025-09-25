@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -29,7 +30,7 @@ public class KakaoLoginController {
 
     @Description("카카오 로그인 콜백 url : 코드를 이용해 토큰을 받고, 해당 토큰으로 사용자 정보 조회")
     @GetMapping("/callback")
-    public void callback(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
+    public void callback(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String accessToken = kakaoLoginService.getAccessTokenFromKakao(code); // 코드 사용해 토큰 받기
 
         User user = kakaoLoginService.getUserInfo(accessToken); // 토큰으로 사용자 정보 조회 -> 계정 생성
@@ -51,6 +52,17 @@ public class KakaoLoginController {
         kakaoIdCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(kakaoIdCookie);
 
-        response.sendRedirect("/api");
+        String origin = request.getHeader("Origin");
+        String host = request.getHeader("Host");
+        boolean isLocal = (origin != null && origin.contains("localhost")) || (host != null && host.contains("localhost"));
+
+        String redirectUrl;
+        if (isLocal) {
+            redirectUrl = "http://localhost:3000/data";
+        } else {
+            redirectUrl = "";
+        }
+
+        response.sendRedirect(redirectUrl);
     }
 }

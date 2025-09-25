@@ -25,28 +25,28 @@ public class MatchingService {
      * 멘토-멘티 매칭 생성
      */
     @Transactional
-    public Matching createMatching(Long mentorId, Long mentiId) {
+    public Matching createMatching(Long mentorKakaoId, Long mentiKakaoId) {
         // 이미 매칭이 존재하는지 확인
-        if (matchingRepository.existsByMentorIdAndMentiId(mentorId, mentiId)) {
+        if (matchingRepository.existsByMentorKakaoIdAndMentiKakaoId(mentorKakaoId, mentiKakaoId)) {
             throw new IllegalStateException("이미 매칭이 존재합니다.");
         }
 
         // 멘티가 이미 다른 멘토와 활성 매칭이 있는지 확인
-        List<Matching> activeMenteeMatchings = matchingRepository.findByMentiIdAndSts(mentiId, "신청완료");
+        List<Matching> activeMenteeMatchings = matchingRepository.findByMentiKakaoIdAndSts(mentiKakaoId, "신청완료");
         if (!activeMenteeMatchings.isEmpty()) {
             throw new IllegalStateException("멘티는 이미 다른 멘토와 매칭되어 있습니다.");
         }
 
         // 멘티가 대기중인 매칭이 있는지 확인
-        List<Matching> pendingMenteeMatchings = matchingRepository.findByMentiIdAndSts(mentiId, "대기중");
+        List<Matching> pendingMenteeMatchings = matchingRepository.findByMentiKakaoIdAndSts(mentiKakaoId, "대기중");
         if (!pendingMenteeMatchings.isEmpty()) {
             throw new IllegalStateException("멘티는 이미 매칭 대기 중입니다.");
         }
 
-        Mentor mentor = mentorRepository.findById(mentorId)
+        Mentor mentor = mentorRepository.findByKakaoId(mentorKakaoId)
                 .orElseThrow(() -> new IllegalArgumentException("멘토를 찾을 수 없습니다."));
 
-        Menti menti = mentiRepository.findById(mentiId)
+        Menti menti = mentiRepository.findByKakaoId(mentiKakaoId)
                 .orElseThrow(() -> new IllegalArgumentException("멘티를 찾을 수 없습니다."));
 
         Matching matching = Matching.builder()
@@ -59,20 +59,17 @@ public class MatchingService {
     }
 
     /**
-     * 멘토 ID와 상태에 따른 멘티 리스트 조회
+     * 멘토 카카오ID와 상태에 따른 멘티 리스트 조회
      */
-    /**
-     * 멘토 ID와 상태에 따른 멘티 리스트 조회 (상태 옵션)
-     */
-    public List<Menti> getMentisBySts(Long mentorId, List<String> statusList) {
+    public List<Menti> getMentisBySts(Long mentorKakaoId, List<String> statusList) {
         List<Matching> matchings;
 
         if (statusList == null || statusList.isEmpty()) {
-            matchings = matchingRepository.findByMentorId(mentorId);
+            matchings = matchingRepository.findByMentorKakaoId(mentorKakaoId);
         } else if (statusList.size() == 1) {
-            matchings = matchingRepository.findByMentorIdAndSts(mentorId, statusList.get(0));
+            matchings = matchingRepository.findByMentorKakaoIdAndSts(mentorKakaoId, statusList.get(0));
         } else {
-            matchings = matchingRepository.findByMentorIdAndStsIn(mentorId, statusList);
+            matchings = matchingRepository.findByMentorKakaoIdAndStsIn(mentorKakaoId, statusList);
         }
 
         return matchings.stream()
@@ -83,21 +80,18 @@ public class MatchingService {
     /**
      * 멘티 ID와 상태에 따른 멘토 리스트 조회
      */
-    /**
-     * 멘티 ID와 상태에 따른 멘토 리스트 조회 (상태 옵션)
-     */
-    public List<Mentor> getMentorsBySts(Long mentiId, List<String> statusList) {
+    public List<Mentor> getMentorsBySts(Long mentiKakaoId, List<String> statusList) {
         List<Matching> matchings;
 
         if (statusList == null || statusList.isEmpty()) {
-            // 상태 조건 없음 - 모든 매칭 조회
-            matchings = matchingRepository.findByMentiId(mentiId);
+            // 모든 매칭 조회
+            matchings = matchingRepository.findByMentiKakaoId(mentiKakaoId);
         } else if (statusList.size() == 1) {
-            // 단일 상태 조회
-            matchings = matchingRepository.findByMentiIdAndSts(mentiId, statusList.get(0));
+            // 상태값 한개
+            matchings = matchingRepository.findByMentiKakaoIdAndSts(mentiKakaoId, statusList.get(0));
         } else {
-            // 여러 상태 조회 (IN절)
-            matchings = matchingRepository.findByMentiIdAndStsIn(mentiId, statusList);
+            // 상태값 두개 이상
+            matchings = matchingRepository.findByMentiKakaoIdAndStsIn(mentiKakaoId, statusList);
         }
 
         return matchings.stream()
@@ -106,11 +100,11 @@ public class MatchingService {
     }
 
     /**
-     * 멘토가 멘티 요청 승인 (대기중 → 신청완료)
+     * 멘티 요청 승인 (대기중 → 신청완료)
      */
     @Transactional
     public Matching approveMentiRequest(Long mentorId, Long mentiId) {
-        Matching matching = matchingRepository.findByMentorIdAndMentiIdAndSts(mentorId, mentiId, "APPROVED")
+        Matching matching = matchingRepository.findByMentorKakaoIdAndMentiKakaoIdAndSts(mentorId, mentiId, "WAITING")
                 .orElseThrow(() -> new IllegalArgumentException("해당 멘토-멘티의 대기중인 매칭을 찾을 수 없습니다."));
 
         matching.setSts("APPROVED");
@@ -118,11 +112,11 @@ public class MatchingService {
     }
 
     /**
-     * 멘토가 멘티 요청 거절 (매칭 거절)
+     * 멘티 요청 거절 (대기중 -> 거절)
      */
     @Transactional
     public void rejectMentiRequest(Long mentorId, Long mentiId) {
-        Matching matching = matchingRepository.findByMentorIdAndMentiIdAndSts(mentorId, mentiId, "REJECTED")
+        Matching matching = matchingRepository.findByMentorKakaoIdAndMentiKakaoIdAndSts(mentorId, mentiId, "WAITING")
                 .orElseThrow(() -> new IllegalArgumentException("해당 멘토-멘티의 대기중인 매칭을 찾을 수 없습니다."));
 
         matching.setSts("REJECTED");
