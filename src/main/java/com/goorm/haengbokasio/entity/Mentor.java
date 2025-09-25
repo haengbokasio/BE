@@ -1,5 +1,6 @@
 package com.goorm.haengbokasio.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.goorm.haengbokasio.converter.CustomerAgeGroupConverter;
 import com.goorm.haengbokasio.converter.MarketingMethodConverter;
 import com.goorm.haengbokasio.enums.CustomerAgeGroup;
@@ -51,17 +52,17 @@ public class Mentor {
     @Column(name = "main_product_service", columnDefinition = "TEXT")
     private String mainProductService; // 대표 상품, 서비
 
-    @Convert(converter = CustomerAgeGroupConverter.class)
+    @Lob
     @Column(name = "target_customer", columnDefinition = "TEXT")
-    private Set<CustomerAgeGroup> targetCustomer = new HashSet<>(); // 주 고객 - enum
+    private String targetCustomer; // 주 고객 - enum
 
-    @Convert(converter = CustomerAgeGroupConverter.class)
+    @Lob
     @Column(name = "customer_acquisition_method", columnDefinition = "TEXT")
-    private Set<CustomerAgeGroup> customerAcquisitionMethod = new HashSet<>(); // 타겟층 - enum
+    private String customerAcquisitionMethod; // 타겟층 - enum
 
-    @Convert(converter = MarketingMethodConverter.class)
+    @Lob
     @Column(name = "marketing_method", columnDefinition = "TEXT")
-    private Set<MarketingMethod> marketingMethod = new HashSet<>(); // 홍보 방법 - enum
+    private String marketingMethod; // 홍보 방법 - enum
 
     @Lob
     @Column(name = "operation_method", columnDefinition = "TEXT")
@@ -72,6 +73,7 @@ public class Mentor {
     private String supplySource; // 운영에 필요한 재료나 용품 구매처
 
     @Lob
+    @JsonProperty("aiAnalysis")
     @Column(name = "ai_analysis", columnDefinition = "TEXT")
     private String aiAnalysis; // ai 분석 결과
 }

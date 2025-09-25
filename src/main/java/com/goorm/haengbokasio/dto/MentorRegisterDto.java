@@ -25,9 +25,9 @@ public class MentorRegisterDto {
     private Integer operationPeriod;
     private Integer monthAvgRevenue;
     private Integer weekAvgDailyRevenue;
-    private Set<CustomerAgeGroup> targetCustomer = new HashSet<>();
-    private Set<CustomerAgeGroup> customerAcquisitionMethod = new HashSet<>();
-    private Set<MarketingMethod> marketingMethod = new HashSet<>();
+    private String targetCustomer;
+    private String customerAcquisitionMethod;
+    private String marketingMethod;
     private String aiAnalysis;
 
 
@@ -46,17 +46,9 @@ public class MentorRegisterDto {
         mentor.setOperationMethod(this.operationMethod);
         mentor.setSupplySource(this.supplySource);
         mentor.setAiAnalysis(this.aiAnalysis);
-
-
-        if (this.targetCustomer != null) {
-            mentor.setTargetCustomer(this.targetCustomer);
-        }
-        if (this.customerAcquisitionMethod != null) {
-            mentor.setCustomerAcquisitionMethod(this.customerAcquisitionMethod);
-        }
-        if (this.marketingMethod != null) {
-            mentor.setMarketingMethod(this.marketingMethod);
-        }
+        mentor.setTargetCustomer(this.targetCustomer);
+        mentor.setCustomerAcquisitionMethod(this.customerAcquisitionMethod);
+        mentor.setMarketingMethod(this.marketingMethod);
 
         return mentor;
     }

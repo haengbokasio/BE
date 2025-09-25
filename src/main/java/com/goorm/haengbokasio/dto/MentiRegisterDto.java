@@ -26,9 +26,9 @@ public class MentiRegisterDto {
     private Integer operationPeriod;
     private Integer monthAvgRevenue;
     private Integer weekAvgDailyRevenue;
-    private Set<CustomerAgeGroup> targetCustomer = new HashSet<>();
-    private Set<CustomerAgeGroup> customerAcquisitionMethod = new HashSet<>();
-    private Set<MarketingMethod> marketingMethod = new HashSet<>();
+    private String targetCustomer;
+    private String customerAcquisitionMethod;
+    private String marketingMethod;
     private String aiAnalysis;
 
 
@@ -47,16 +47,9 @@ public class MentiRegisterDto {
         menti.setOperationMethod(this.operationMethod);
         menti.setSupplySource(this.supplySource);
         menti.setAiAnalysis(this.aiAnalysis);
-
-        if (this.targetCustomer != null) {
-            menti.setTargetCustomer(this.targetCustomer);
-        }
-        if (this.customerAcquisitionMethod != null) {
-            menti.setCustomerAcquisitionMethod(this.customerAcquisitionMethod);
-        }
-        if (this.marketingMethod != null) {
-            menti.setMarketingMethod(this.marketingMethod);
-        }
+        menti.setTargetCustomer(this.targetCustomer);
+        menti.setCustomerAcquisitionMethod(this.customerAcquisitionMethod);
+        menti.setMarketingMethod(this.marketingMethod);
 
         return menti;
     }
