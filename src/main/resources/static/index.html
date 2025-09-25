@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>메인 페이지</title>
+</head>
+<body>
+<h1>로그인 성공!</h1>
+<script>
+        // URL에서 토큰 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const kakaoId = urlParams.get('kakaoId');
+
+        if (token && kakaoId) {
+            localStorage.setItem('token', token);
+            localStorage.setItem('kakaoId', kakaoId);
+
+            // URL 파라미터 제거
+            window.history.replaceState({}, document.title, '/');
+
+        }
+    </script>
+</body>
+</html>

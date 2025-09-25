@@ -3,6 +3,7 @@ package com.goorm.haengbokasio.controller.login;
 import com.goorm.haengbokasio.entity.User;
 import com.goorm.haengbokasio.jwt.JwtTokenProvider;
 import com.goorm.haengbokasio.service.KakaoLoginService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Description;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,21 @@ public class KakaoLoginController {
 
         String jwtToken = jwtTokenProvider.createToken(user.getKakaoId()); // jwt 토큰 생성
 
-        String redirectUrl = "/?token=" + jwtToken + "&kakaoId=" + user.getKakaoId();
-        response.sendRedirect(redirectUrl);
+        // 쿠키에 토큰과 카카오ID 저장
+        Cookie tokenCookie = new Cookie("token", jwtToken);
+        tokenCookie.setHttpOnly(true);
+        tokenCookie.setSecure(true);
+        tokenCookie.setPath("/");
+        tokenCookie.setMaxAge(24 * 60 * 60);
+        response.addCookie(tokenCookie);
+
+        Cookie kakaoIdCookie = new Cookie("kakaoId", String.valueOf(user.getKakaoId()));
+        kakaoIdCookie.setHttpOnly(false);
+        kakaoIdCookie.setSecure(true);
+        kakaoIdCookie.setPath("/");
+        kakaoIdCookie.setMaxAge(24 * 60 * 60);
+        response.addCookie(kakaoIdCookie);
+
+        response.sendRedirect("/index.html");
     }
 }
