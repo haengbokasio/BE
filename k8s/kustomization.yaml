@@ -4,4 +4,4 @@ resources:
 configMapGenerator:
   - name: backend-config
     literals:
-      - SPRING_PROFILES_ACTIVE=default
+      - SPRING_PROFILES_ACTIVE=prod
