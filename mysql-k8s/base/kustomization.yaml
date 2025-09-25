@@ -3,6 +3,8 @@ resources:
   - service.yaml
   - secret.yaml
 
+namespace: goormthon-6
+
 commonLabels:
   app: mysql
 
