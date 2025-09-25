@@ -17,13 +17,13 @@ public class Matching {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mentor_id", nullable = false)
+    @JoinColumn(name = "mentor_id", referencedColumnName = "kakao_id", nullable = false)
     private Mentor mentor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menti_id", nullable = false)
+    @JoinColumn(name = "menti_id", referencedColumnName = "kakao_id", nullable = false)
     private Menti menti;
 
-    @Column(name = "sts", nullable = false)
+    @Column(name = "sts")
     private String sts;
 }
