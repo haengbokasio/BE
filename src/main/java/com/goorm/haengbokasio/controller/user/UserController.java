@@ -2,8 +2,6 @@ package com.goorm.haengbokasio.controller.user;
 
 import com.goorm.haengbokasio.dto.MentiRegisterDto;
 import com.goorm.haengbokasio.dto.MentorRegisterDto;
-import com.goorm.haengbokasio.entity.Menti;
-import com.goorm.haengbokasio.entity.User;
 import com.goorm.haengbokasio.service.MentiService;
 import com.goorm.haengbokasio.service.MentorService;
 import com.goorm.haengbokasio.service.UserService;
@@ -51,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok(userInfo);
     }
 
-    @PostMapping("/mentor/register")
+    @PostMapping("/mentor/register/{kakaoId}")
     @Operation(summary = "멘토 정보 등록", description = "신규 멘토의 상세 정보를 저장합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "멘토 등록 성공 (ID 반환)"),
@@ -70,14 +68,14 @@ public class UserController {
         }
     }
 
-    @PostMapping("/menti/register")
+    @PostMapping("/menti/register/{kakaoId}")
     @Operation(summary = "멘티 정보 등록", description = "신규 멘티의 상세 정보를 저장합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "멘티 등록 성공 (ID 반환)"),
             @ApiResponse(responseCode = "409", description = "이미 존재하는 멘티 정보 (충돌)"),
             @ApiResponse(responseCode = "500", description = "서버 오류")
     })
-    public ResponseEntity<Long> registerMenti(@RequestBody MentiRegisterDto registerDto) {
+    public ResponseEntity<Long> registerMenti(@PathVariable Long kakaoId, @RequestBody MentiRegisterDto registerDto) {
 
         try {
             Long mentorId = mentiService.registerMentor(registerDto);

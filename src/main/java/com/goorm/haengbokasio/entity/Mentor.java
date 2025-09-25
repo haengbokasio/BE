@@ -6,7 +6,6 @@ import com.goorm.haengbokasio.enums.CustomerAgeGroup;
 import com.goorm.haengbokasio.enums.MarketingMethod;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 

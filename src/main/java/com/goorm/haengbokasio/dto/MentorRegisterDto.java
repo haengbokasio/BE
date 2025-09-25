@@ -28,6 +28,8 @@ public class MentorRegisterDto {
     private Set<CustomerAgeGroup> targetCustomer = new HashSet<>();
     private Set<CustomerAgeGroup> customerAcquisitionMethod = new HashSet<>();
     private Set<MarketingMethod> marketingMethod = new HashSet<>();
+    private String aiAnalysis;
+
 
     public Mentor toEntity() {
         Mentor mentor = new Mentor();
@@ -43,6 +45,8 @@ public class MentorRegisterDto {
         mentor.setMainProductService(this.mainProductService);
         mentor.setOperationMethod(this.operationMethod);
         mentor.setSupplySource(this.supplySource);
+        mentor.setAiAnalysis(this.aiAnalysis);
+
 
         if (this.targetCustomer != null) {
             mentor.setTargetCustomer(this.targetCustomer);

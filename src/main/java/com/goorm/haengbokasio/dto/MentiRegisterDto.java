@@ -29,6 +29,8 @@ public class MentiRegisterDto {
     private Set<CustomerAgeGroup> targetCustomer = new HashSet<>();
     private Set<CustomerAgeGroup> customerAcquisitionMethod = new HashSet<>();
     private Set<MarketingMethod> marketingMethod = new HashSet<>();
+    private String aiAnalysis;
+
 
     public Menti toEntity() {
         Menti menti = new Menti();
@@ -44,6 +46,7 @@ public class MentiRegisterDto {
         menti.setMainProductService(this.mainProductService);
         menti.setOperationMethod(this.operationMethod);
         menti.setSupplySource(this.supplySource);
+        menti.setAiAnalysis(this.aiAnalysis);
 
         if (this.targetCustomer != null) {
             menti.setTargetCustomer(this.targetCustomer);
