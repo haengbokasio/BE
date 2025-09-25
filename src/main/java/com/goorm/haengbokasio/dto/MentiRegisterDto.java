@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class MentiRegisterDto {
 
-    private String kakaoId;
+    private Long kakaoId;
     private String phoneNumber;
     private String businessType;
     private String businessDetail;

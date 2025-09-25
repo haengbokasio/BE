@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface MentiRepository extends JpaRepository<Menti, Long> {
 
-    Optional<Menti> findByKakaoId(String kakaoId);
+    Optional<Menti> findByKakaoId(Long kakaoId);
 }

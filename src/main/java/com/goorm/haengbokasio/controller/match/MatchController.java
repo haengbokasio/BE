@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/matching")
+@RequestMapping("/matching")
 @RequiredArgsConstructor
 public class MatchController {
 
@@ -50,7 +50,7 @@ public class MatchController {
         return ResponseEntity.ok(mentiList);
     }
 
-    @GetMapping("/mento/{mentiId}")
+    @GetMapping("/mento/{kakaoId}")
     @Operation(summary = "멘티와 연결중인 멘토 조회", description = "멘티 ID와 상태값에 따라 연결중인 멘토 리스트 조회")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -64,7 +64,7 @@ public class MatchController {
         return ResponseEntity.ok(mentorList);
     }
 
-    @PutMapping("/approve/{mentiId}")
+    @PutMapping("/approve/{kakaoId}")
     @Operation(summary = "멘토가 멘티 요청 승인", description = "멘토가 특정 멘티의 매칭 요청을 승인")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "승인 성공"),
@@ -79,7 +79,7 @@ public class MatchController {
         return ResponseEntity.ok(approvedMatching);
     }
 
-    @PutMapping("/reject/{mentiId}")
+    @PutMapping("/reject/{kakaoId}")
     @Operation(summary = "멘토가 멘티 요청 거절", description = "멘토가 특정 멘티의 매칭 요청을 거절")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "거절 성공"),

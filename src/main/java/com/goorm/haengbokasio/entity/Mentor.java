@@ -25,7 +25,7 @@ public class Mentor {
     private Long id;
 
     @Column(name = "kakao_id", nullable = false, unique = true, length = 100)
-    private String kakaoId;
+    private Long kakaoId;
 
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;

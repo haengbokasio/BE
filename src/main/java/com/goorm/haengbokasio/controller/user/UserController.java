@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @Tag(name = "User", description = "user 관리 API")
 public class UserController {
@@ -27,6 +27,7 @@ public class UserController {
     private final MentorService mentorService;
     private final MentiService mentiService;
 
+    /*
     @GetMapping("/kakao/{kakaoId}")
     @Operation(summary = "카카오 ID로 조회", description = "카카오 ID를 통해 사용자를 조회합니다.")
     @ApiResponses({
@@ -36,6 +37,18 @@ public class UserController {
     public ResponseEntity<User> getUserByKakaoId(@PathVariable Long kakaoId) {
         User user = userService.getUserByKakaoId(kakaoId);
         return ResponseEntity.ok(user);
+    }
+     */
+
+    @GetMapping("mypage/{kakaoId}")
+    @Operation(summary = "카카오 ID로 조회", description = "사용자 정보를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "조회 성공"),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    public ResponseEntity<?> getUserInfo(@PathVariable Long kakaoId) {
+        Object userInfo = userService.getUserInfo(kakaoId);
+        return ResponseEntity.ok(userInfo);
     }
 
     @PostMapping("/mentor/register")

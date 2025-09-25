@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface MentorRepository extends JpaRepository<Mentor, Long> {
 
-    Optional<Mentor> findByKakaoId(String kakaoId);
+    Optional<Mentor> findByKakaoId(Long kakaoId);
 }
