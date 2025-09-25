@@ -52,7 +52,7 @@ public class KakaoLoginController {
         // String origin = request.getHeader("Origin");
         // String host = request.getHeader("Host");
 
-        String redirectUrl = "https://goormthon-6.goorm.training/onboarding";
+        String redirectUrl = "https://goormthon-6.goorm.training/onboarding?kakaoId="+String.valueOf(user.getKakaoId());
 
         response.sendRedirect(redirectUrl);
     }
