@@ -27,6 +27,10 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다. 카카오 ID: " + kakaoId));
     }
 
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
     /**
      * 마이페이지 조회
      */
