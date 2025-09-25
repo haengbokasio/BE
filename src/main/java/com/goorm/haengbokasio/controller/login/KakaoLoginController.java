@@ -49,16 +49,10 @@ public class KakaoLoginController {
         kakaoIdCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(kakaoIdCookie);
 
-        String origin = request.getHeader("Origin");
-        String host = request.getHeader("Host");
-        boolean isLocal = (origin != null && origin.contains("localhost")) || (host != null && host.contains("localhost"));
+        // String origin = request.getHeader("Origin");
+        // String host = request.getHeader("Host");
 
-        String redirectUrl;
-        if (isLocal) {
-            redirectUrl = "http://localhost:3000/data";
-        } else {
-            redirectUrl = "https://goormthon-6.goorm.training/login";
-        }
+        String redirectUrl = "https://goormthon-6.goorm.training/login";
 
         response.sendRedirect(redirectUrl);
     }
