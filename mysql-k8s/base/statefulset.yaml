@@ -39,12 +39,6 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-            - name: init-script
-              mountPath: /docker-entrypoint-initdb.d
-      volumes:
-        - name: init-script
-          configMap:
-            name: sql-init-script
   volumeClaimTemplates:
     - metadata:
         name: mysql-data
