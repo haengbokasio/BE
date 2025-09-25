@@ -13,11 +13,10 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Demo For Haengbokasio")
+                        .title("Haengbokasio")
                         .description("애플리케이션 API 문서")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .name("행복하시오")
-                                .email("aden0119@naver.com")));
+                                .name("Haengbokasio")));
     }
 }

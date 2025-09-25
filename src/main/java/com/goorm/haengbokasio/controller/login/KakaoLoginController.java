@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/login")
@@ -34,6 +36,10 @@ public class KakaoLoginController {
 
         String jwtToken = jwtTokenProvider.createToken(user.getKakaoId()); // jwt 토큰 생성
 
-        return ResponseEntity.ok(Collections.singletonMap("token", jwtToken)); // 토큰 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", jwtToken);
+        response.put("kakaoId", user.getKakaoId());
+
+        return ResponseEntity.ok(response);
     }
 }

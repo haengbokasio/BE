@@ -8,3 +8,4 @@ configMapGenerator:
   - name: backend-config
     literals:
       - SPRING_PROFILES_ACTIVE=prod
+

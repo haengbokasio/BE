@@ -72,6 +72,7 @@ public class Mentor {
     @Column(name = "supply_source", columnDefinition = "TEXT")
     private String supplySource; // 운영에 필요한 재료나 용품 구매처
 
-    @Column(name = "disabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private Boolean disabled = false;
+    @Lob
+    @Column(name = "ai_analysis", columnDefinition = "TEXT")
+    private String aiAnalysis; // ai 분석 결과
 }
