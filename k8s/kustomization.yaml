@@ -1,6 +1,9 @@
 resources:
   - backend.yaml
 
+bases:
+  - ../mysql-k8s/base
+
 configMapGenerator:
   - name: backend-config
     literals:
