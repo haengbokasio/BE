@@ -51,6 +51,6 @@ public class KakaoLoginController {
         kakaoIdCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(kakaoIdCookie);
 
-        response.sendRedirect("/");
+        response.sendRedirect("/api");
     }
 }
