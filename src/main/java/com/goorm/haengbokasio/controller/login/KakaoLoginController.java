@@ -60,7 +60,7 @@ public class KakaoLoginController {
         if (isLocal) {
             redirectUrl = "http://localhost:3000/data";
         } else {
-            redirectUrl = "";
+            redirectUrl = "https://goormthon-6.goorm.training/login";
         }
 
         response.sendRedirect(redirectUrl);
