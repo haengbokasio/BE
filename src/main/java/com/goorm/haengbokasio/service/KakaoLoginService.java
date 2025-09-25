@@ -87,6 +87,8 @@ public class KakaoLoginService {
             User newUser = User.builder()
                     .kakaoId(kakaoUserInfo.getId())
                     .build();
+
+            userRepository.save(newUser);
             return newUser;
         }
     }

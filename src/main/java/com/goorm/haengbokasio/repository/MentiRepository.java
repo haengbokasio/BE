@@ -1,13 +1,13 @@
 package com.goorm.haengbokasio.repository;
 
-import com.goorm.haengbokasio.entity.Mentor;
+import com.goorm.haengbokasio.entity.Menti;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
-import java.util.List;
 
 @Repository
-public interface MentorRepository extends JpaRepository<Mentor, Long> {
+public interface MentiRepository extends JpaRepository<Menti, Long> {
 
-    Optional<Mentor> findByKakaoId(String kakaoId);
+    Optional<Menti> findByKakaoId(String kakaoId);
 }

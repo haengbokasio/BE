@@ -18,15 +18,12 @@ public class User {
     @Column(name = "kakao_id", nullable = false, unique = true, length = 100)
     private Long kakaoId;
 
-    // 기본 생성자
     public User() {}
 
-    // 생성자
     public User(Long kakaoId) {
         this.kakaoId = kakaoId;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
