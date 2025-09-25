@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -37,6 +39,36 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
      */
+
+    @GetMapping("/mentis")
+    @Operation(summary = "전체 멘티 조회", description = "등록된 모든 멘티 정보를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "멘티 목록 조회 성공"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    public ResponseEntity<?> getAllMentis() {
+        try {
+            List<?> mentis = mentiService.getAllMentis();
+            return ResponseEntity.ok(mentis);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/mentisOrderByMonthAvg")
+    @Operation(summary = "월매출 순 멘토 리스트 조회", description = "월매출 순 멘토 리스트를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "멘토 목록 조회 성공"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    public ResponseEntity<?> mentisOrderByMonthAvg() {
+        try {
+            List<?> mentis = mentorService.mentisOrderByMonthAvg();
+            return ResponseEntity.ok(mentis);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("mypage/{kakaoId}")
     @Operation(summary = "카카오 ID로 조회", description = "사용자 정보를 조회합니다.")

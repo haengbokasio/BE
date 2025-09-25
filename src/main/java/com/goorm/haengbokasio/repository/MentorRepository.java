@@ -10,4 +10,6 @@ import java.util.List;
 public interface MentorRepository extends JpaRepository<Mentor, Long> {
 
     Optional<Mentor> findByKakaoId(Long kakaoId);
+
+    List<Mentor> findAllByOrderByMonthAvgRevenueDesc();
 }
