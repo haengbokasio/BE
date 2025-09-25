@@ -3,9 +3,8 @@ resources:
   - service.yaml
   - secret.yaml
 
-labels:
+commonLabels:
   app: mysql
 
 generatorOptions:
   disableNameSuffixHash: true
-
