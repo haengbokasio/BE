@@ -86,10 +86,8 @@ public class KakaoLoginService {
             // 새 사용자 생성
             User newUser = User.builder()
                     .kakaoId(kakaoUserInfo.getId())
-                    .nickname(kakaoUserInfo.getKakaoAccount().name)
-                    .userRole("USER")  // 기본 역할 설정
                     .build();
-            return userRepository.save(newUser);
+            return newUser;
         }
     }
 }
