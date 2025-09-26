@@ -35,7 +35,25 @@
 
 
 
-select * from menti where kakao_id = '7216136261';]]></console>
+select * from menti where kakao_id = '7216136261';
+
+
+
+select * from menti;
+
+select * from mentor;
+
+select * from menti;
+
+select * from users where kakao_id = '4694102833';
+
+select * from mentor where month_avg_revenue > 1000;
+
+delete from mentor where month_avg_revenue > 1000;
+
+
+
+update menti set customer_acquisition_method = 'SNS' where customer_acquisition_method != '';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

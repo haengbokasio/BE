@@ -5,6 +5,7 @@ import com.goorm.haengbokasio.entity.Menti;
 import com.goorm.haengbokasio.entity.Mentor;
 import com.goorm.haengbokasio.service.MatchingService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -94,5 +95,37 @@ public class MatchController {
 
         matchingService.rejectMentiRequest(mentorKakaoId, mentiKakaoId);
         return ResponseEntity.ok("멘티의 매칭 요청이 거절되었습니다.");
+    }
+
+    @GetMapping("/all/mentor/{kakaoId}")
+    @Operation(
+            summary = "멘토의 모든 매칭 조회",
+            description = "특정 멘토의 카카오 ID로 해당 멘토와 관련된 모든 매칭 정보를 조회합니다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "조회 성공"),
+            @ApiResponse(responseCode = "404", description = "멘토를 찾을 수 없음")
+    })
+    public ResponseEntity<List<Matching>> getMatchingsByMentor(
+            @Parameter(description = "멘토의 카카오 ID", required = true)
+            @PathVariable Long kakaoId) {
+        List<Matching> matchings = matchingService.getMatchingsByMentorKakaoId(kakaoId);
+        return ResponseEntity.ok(matchings);
+    }
+
+    @GetMapping("/all/menti/{kakaoId}")
+    @Operation(
+            summary = "멘티의 모든 매칭 조회",
+            description = "특정 멘티의 카카오 ID로 해당 멘티와 관련된 모든 매칭 정보를 조회합니다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "조회 성공"),
+            @ApiResponse(responseCode = "404", description = "멘티를 찾을 수 없음")
+    })
+    public ResponseEntity<List<Matching>> getMatchingsByMenti(
+            @Parameter(description = "멘티의 카카오 ID", required = true)
+            @PathVariable Long kakaoId) {
+        List<Matching> matchings = matchingService.getMatchingsByMentiKakaoId(kakaoId);
+        return ResponseEntity.ok(matchings);
     }
 }

@@ -123,4 +123,18 @@ public class MatchingService {
         matchingRepository.save(matching);
     }
 
+    /**
+     * 멘토의 카카오 ID로 해당 멘토의 모든 매칭 조회
+     */
+    public List<Matching> getMatchingsByMentorKakaoId(Long kakaoId) {
+        return matchingRepository.findByMentorKakaoId(kakaoId);
+    }
+
+    /**
+     * 멘티의 카카오 ID로 해당 멘티의 모든 매칭 조회
+     */
+    public List<Matching> getMatchingsByMentiKakaoId(Long kakaoId) {
+        return matchingRepository.findByMentiKakaoId(kakaoId);
+    }
+
 }
