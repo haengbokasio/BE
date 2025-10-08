@@ -51,17 +51,17 @@ public class Menti {
     @Column(name = "main_product_service", columnDefinition = "TEXT")
     private String mainProductService; // 대표 상품, 서비
 
-    @Lob
-    @Column(name = "target_customer", columnDefinition = "TEXT")
-    private String targetCustomer; // 주 고객 - enum
+    @Enumerated(EnumType.STRING)
+    @Column(name = "target_customer")
+    private CustomerAgeGroup targetCustomer; // 주 고객 - enum
 
-    @Lob
-    @Column(name = "customer_acquisition_method", columnDefinition = "TEXT")
-    private String customerAcquisitionMethod; // 타겟층 - enum
+    @Enumerated(EnumType.STRING)
+    @Column(name = "customer_acquisition_method")
+    private CustomerAgeGroup customerAcquisitionMethod; // 타겟층 - enum
 
-    @Lob
-    @Column(name = "marketing_method", columnDefinition = "TEXT")
-    private String marketingMethod; // 홍보 방법 - enum
+    @Enumerated(EnumType.STRING)
+    @Column(name = "marketing_method")
+    private MarketingMethod marketingMethod; // 홍보 방법 - enum
 
     @Lob
     @Column(name = "operation_method", columnDefinition = "TEXT")

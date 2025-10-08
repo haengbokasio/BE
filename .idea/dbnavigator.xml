@@ -53,7 +53,15 @@ delete from mentor where month_avg_revenue > 1000;
 
 
 
-update menti set customer_acquisition_method = 'SNS' where customer_acquisition_method != '';]]></console>
+update menti set customer_acquisition_method = 'SNS' where customer_acquisition_method != '';
+
+
+
+select * from mentor;
+
+select * from menti where kakao_id = '2692412755';
+
+select * from matching where menti_id = '3728541965';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

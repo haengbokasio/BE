@@ -26,9 +26,9 @@ public class MentiRegisterDto {
     private Integer operationPeriod;
     private Integer monthAvgRevenue;
     private Integer weekAvgDailyRevenue;
-    private String targetCustomer;
-    private String customerAcquisitionMethod;
-    private String marketingMethod;
+    private CustomerAgeGroup targetCustomer;
+    private CustomerAgeGroup customerAcquisitionMethod;
+    private MarketingMethod marketingMethod;
     private String aiAnalysis;
 
 

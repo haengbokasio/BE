@@ -2,7 +2,6 @@ package com.goorm.haengbokasio.service;
 
 import com.goorm.haengbokasio.dto.MentiRegisterDto;
 import com.goorm.haengbokasio.entity.Menti;
-import com.goorm.haengbokasio.entity.Mentor;
 import com.goorm.haengbokasio.repository.MentiRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
